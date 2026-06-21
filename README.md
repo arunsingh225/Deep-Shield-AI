@@ -14,8 +14,7 @@
 
 ---
 
-### 🌐 [Live Demo](https://deepshield-ai.web.app) &nbsp;|&nbsp; 📹 [Demo Video](#) &nbsp;|&nbsp; 🏆 Google Build with AI 2026
-
+### 🌐 [Live Demo](https://deepshield-ai.web.app) 
 **Built by Team Easycoder &nbsp;|&nbsp; Category: Digital Asset Protection**
 
 </div>
