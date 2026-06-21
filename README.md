@@ -16,7 +16,7 @@
 
 ### 🌐 [Live Demo](https://deepshield-ai.web.app) &nbsp;|&nbsp; 📹 [Demo Video](#) &nbsp;|&nbsp; 🏆 Google Build with AI 2026
 
-**Built by Team Neuro Galaxy &nbsp;|&nbsp; Category: Digital Asset Protection**
+**Built by Team Easycoder &nbsp;|&nbsp; Category: Digital Asset Protection**
 
 </div>
 
@@ -407,7 +407,7 @@ Contributions are welcome and greatly appreciated!
 
 <div align="center">
 
-**🛡️ Driven by AI. Built with ❤️ by Team Neuro Galaxy.**
+**🛡️ Driven by AI. Built with ❤️ by Team Easycoder.**
 
 **Google Build with AI 2026 &nbsp;|&nbsp; Digital Asset Protection**
 
