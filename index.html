@@ -14,6 +14,22 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>" />
 
     <title>DeepShield AI — Deepfake & Digital Scam Detection</title>
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('deepshield_theme');
+          if (saved === 'light' || saved === 'dark') {
+            document.documentElement.classList.add(saved);
+            return;
+          }
+          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+            return;
+          }
+        } catch (e) {}
+        document.documentElement.classList.add('light');
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

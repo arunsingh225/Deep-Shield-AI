@@ -93,7 +93,7 @@ export function Navbar({ navigate, currentPath }: NavbarProps) {
             <div className="flex items-center gap-2 ml-3 pl-3 border-l border-slate-700/50">
               <button
                 onClick={toggleTheme}
-                className="px-3 py-1.5 rounded-full text-xs glass-light text-slate-300 hover:text-white transition-all flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-full text-xs glass-light text-slate-300 hover:text-slate-100 transition-all flex items-center gap-1.5"
                 aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               >
                 {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
@@ -102,7 +102,7 @@ export function Navbar({ navigate, currentPath }: NavbarProps) {
 
               <button
                 onClick={toggleSound}
-                className="px-3 py-1.5 rounded-full text-xs glass-light text-slate-300 hover:text-white transition-all flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-full text-xs glass-light text-slate-300 hover:text-slate-100 transition-all flex items-center gap-1.5"
                 aria-label={isSoundEnabled ? 'Disable sound effects' : 'Enable sound effects'}
               >
                 {isSoundEnabled ? '🔊' : '🔇'}
@@ -111,7 +111,7 @@ export function Navbar({ navigate, currentPath }: NavbarProps) {
 
               <button
                 onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
-                className="px-3 py-1.5 rounded-full text-xs font-bold glass-light text-slate-300 hover:text-white transition-all"
+                className="px-3 py-1.5 rounded-full text-xs font-bold glass-light text-slate-300 hover:text-slate-100 transition-all"
                 aria-label={lang === 'en' ? 'Switch to Hindi' : 'Switch to English'}
               >
                 {lang === 'en' ? 'हिंदी' : 'EN'}
@@ -121,7 +121,7 @@ export function Navbar({ navigate, currentPath }: NavbarProps) {
 
           {/* Mobile hamburger */}
           <button
-            className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+            className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
@@ -155,7 +155,7 @@ export function Navbar({ navigate, currentPath }: NavbarProps) {
             >
               <div className="flex items-center justify-between mb-8">
                 <span className="text-lg font-bold gradient-text-cyan">DeepShield AI</span>
-                <button onClick={() => setMobileOpen(false)} className="p-2 rounded-lg text-slate-400 hover:text-white" aria-label="Close menu">
+                <button onClick={() => setMobileOpen(false)} className="p-2 rounded-lg text-slate-400 hover:text-slate-100" aria-label="Close menu">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -170,8 +170,8 @@ export function Navbar({ navigate, currentPath }: NavbarProps) {
                       onClick={() => handleNav(item.path)}
                       className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all
                         ${active
-                          ? 'bg-cyan-950/50 text-cyan-400 border border-cyan-500/30'
-                          : 'text-slate-400 hover:text-white hover:bg-slate-800/50 border border-transparent'
+                          ? 'bg-cyan-500/10 text-cyan-500 border border-cyan-500/30 dark:bg-cyan-950/50 dark:text-cyan-400'
+                          : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 border border-transparent'
                         }`}
                     >
                       <Icon className="w-5 h-5" />
@@ -184,7 +184,7 @@ export function Navbar({ navigate, currentPath }: NavbarProps) {
               <div className="mt-auto pt-6 border-t border-slate-700/50 flex flex-col gap-3">
                 <button
                   onClick={toggleTheme}
-                  className="w-full px-3 py-2.5 rounded-xl text-sm glass-light text-slate-300 hover:text-white transition-all flex items-center justify-center gap-2"
+                  className="w-full px-3 py-2.5 rounded-xl text-sm glass-light text-slate-300 hover:text-slate-100 transition-all flex items-center justify-center gap-2"
                   aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
                 >
                   {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -193,13 +193,13 @@ export function Navbar({ navigate, currentPath }: NavbarProps) {
                 <div className="flex gap-3">
                   <button
                     onClick={toggleSound}
-                    className="flex-1 px-3 py-2.5 rounded-xl text-sm glass-light text-slate-300 hover:text-white transition-all text-center"
+                    className="flex-1 px-3 py-2.5 rounded-xl text-sm glass-light text-slate-300 hover:text-slate-100 transition-all text-center"
                   >
                     {isSoundEnabled ? '🔊 Sound On' : '🔇 Sound Off'}
                   </button>
                   <button
                     onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
-                    className="flex-1 px-3 py-2.5 rounded-xl text-sm font-bold glass-light text-slate-300 hover:text-white transition-all text-center"
+                    className="flex-1 px-3 py-2.5 rounded-xl text-sm font-bold glass-light text-slate-300 hover:text-slate-100 transition-all text-center"
                   >
                     {lang === 'en' ? 'हिंदी' : 'English'}
                   </button>

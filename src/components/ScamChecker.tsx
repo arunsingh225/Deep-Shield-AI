@@ -126,7 +126,7 @@ export function ScamChecker({ onScanComplete }: { onScanComplete: (r: ScanResult
             </button>
           </div>
           {error && (
-            <p id="scam-error" className="text-red-400 text-sm" role="alert">{error}</p>
+            <p id="scam-error" className="text-red-600 dark:text-red-400 text-sm" role="alert">{error}</p>
           )}
         </div>
 

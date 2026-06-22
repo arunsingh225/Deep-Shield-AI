@@ -90,9 +90,9 @@ export function CertificateAction({ result }: { result: ScanResult }) {
   };
 
   return (
-    <div className="bg-green-950/30 border border-green-900/50 rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div className="bg-green-500/10 border border-green-200 dark:bg-green-950/30 dark:border-green-900/50 rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>
-        <h4 className="text-green-400 font-bold flex items-center gap-2 text-lg">
+        <h4 className="text-green-600 dark:text-green-400 font-bold flex items-center gap-2 text-lg">
           <Award className="w-5 h-5" /> Asset Verified Safe
         </h4>
         <p className="text-slate-400 text-sm mt-1">Generate an official certificate of authenticity for your records.</p>

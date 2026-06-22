@@ -8,7 +8,7 @@ interface ThemeContextValue {
 }
 
 export const ThemeContext = React.createContext<ThemeContextValue>({
-  theme: 'dark',
+  theme: 'light',
   toggleTheme: () => {},
 });
 
@@ -22,11 +22,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved === 'light' || saved === 'dark') return saved;
     } catch { /* SSR / incognito */ }
-    // Respect OS preference
-    if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: light)').matches) {
-      return 'light';
+    // Respect OS preference if dark, otherwise default to light
+    if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
     }
-    return 'dark';
+    return 'light';
   });
 
   useEffect(() => {

@@ -12,9 +12,9 @@ const CATEGORY_ICON: Record<string, React.ReactNode> = {
 };
 
 const SEVERITY_STYLE: Record<string, { bg: string; dot: string }> = {
-  high: { bg: 'border-red-700/40 bg-red-950/20 text-red-200', dot: 'bg-red-500' },
-  medium: { bg: 'border-yellow-700/40 bg-yellow-950/20 text-yellow-200', dot: 'bg-yellow-500' },
-  low: { bg: 'border-slate-700/40 bg-slate-900/30 text-slate-300', dot: 'bg-slate-500' },
+  high: { bg: 'border-red-300 dark:border-red-700/40 bg-red-500/10 dark:bg-red-950/20 text-red-700 dark:text-red-200', dot: 'bg-red-500' },
+  medium: { bg: 'border-yellow-300 dark:border-yellow-700/40 bg-yellow-500/10 dark:bg-yellow-950/20 text-yellow-700 dark:text-yellow-200', dot: 'bg-yellow-500' },
+  low: { bg: 'border-slate-300 dark:border-slate-700/40 bg-slate-500/10 dark:bg-slate-900/30 text-slate-700 dark:text-slate-300', dot: 'bg-slate-500' },
 };
 
 const SEVERITY_ORDER: Record<string, number> = { high: 0, medium: 1, low: 2 };
@@ -33,7 +33,7 @@ export function ExplainabilityPanel({ evidence, fallbackFlags }: { evidence?: Ev
     : (fallbackFlags || []).map((finding) => ({ category: 'text' as const, finding, severity: 'medium' as const }));
 
   if (items.length === 0) {
-    return <p className="text-green-400 text-sm">{t.noEvidence}</p>;
+    return <p className="text-green-600 dark:text-green-400 text-sm">{t.noEvidence}</p>;
   }
 
   const sorted = [...items].sort((a, b) => (SEVERITY_ORDER[a.severity] ?? 3) - (SEVERITY_ORDER[b.severity] ?? 3));

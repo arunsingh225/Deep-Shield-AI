@@ -116,7 +116,7 @@ export function UrlChecker({ onScanComplete }: { onScanComplete: (r: ScanResult)
           </div>
 
           {error && (
-            <div id="url-error" className="p-4 bg-red-950/50 border border-red-900/50 rounded-xl text-red-500 flex items-center gap-3" role="alert">
+            <div id="url-error" className="p-4 bg-red-500/10 border border-red-200 dark:bg-red-950/50 dark:border-red-900/50 rounded-xl text-red-600 dark:text-red-500 flex items-center gap-3" role="alert">
               <AlertOctagon className="w-5 h-5 flex-shrink-0" />
               <span className="text-sm">{error}</span>
             </div>

@@ -1,27 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  --bg-app: #020617; /* slate-950 */
-  --card-bg-solid: #0f172a; /* slate-900 */
-  --border-solid: #1e293b; /* slate-800 */
-  --border-light: #334155; /* slate-700 */
-  --text-muted-dark: #64748b; /* slate-500 */
-  --text-muted: #94a3b8; /* slate-400 */
-  --text-main-muted: #cbd5e1; /* slate-300 */
-  --text-main: #e2e8f0; /* slate-200 */
-  --text-title: #ffffff; /* slate-100 / white */
-
-  --glass-bg: rgba(15, 23, 42, 0.6);
-  --glass-border: rgba(148, 163, 184, 0.1);
-  --glass-light-bg: rgba(30, 41, 59, 0.4);
-  --glass-light-border: rgba(148, 163, 184, 0.08);
-  --glass-cyan-bg: rgba(8, 145, 178, 0.08);
-  --glass-cyan-border: rgba(6, 182, 212, 0.2);
-
-  --dot-grid-opacity: 0.06;
-}
-
-:root.light {
   --bg-app: #f3f4f6; /* gray-100 (light gray) */
   --card-bg-solid: #ffffff; /* white */
   --border-solid: #e5e7eb; /* gray-200 */
@@ -40,6 +19,35 @@
   --glass-cyan-border: rgba(6, 182, 212, 0.3);
 
   --dot-grid-opacity: 0.15;
+
+  --input-bg: #ffffff; /* white */
+  --input-border: #d1d5db; /* gray-300 */
+  --input-focus-bg: #f9fafb; /* gray-50 */
+}
+
+:root.dark {
+  --bg-app: #020617; /* slate-950 */
+  --card-bg-solid: #0f172a; /* slate-900 */
+  --border-solid: #1e293b; /* slate-800 */
+  --border-light: #334155; /* slate-700 */
+  --text-muted-dark: #64748b; /* slate-500 */
+  --text-muted: #94a3b8; /* slate-400 */
+  --text-main-muted: #cbd5e1; /* slate-300 */
+  --text-main: #e2e8f0; /* slate-200 */
+  --text-title: #ffffff; /* slate-100 / white */
+
+  --glass-bg: rgba(15, 23, 42, 0.6);
+  --glass-border: rgba(148, 163, 184, 0.1);
+  --glass-light-bg: rgba(30, 41, 59, 0.4);
+  --glass-light-border: rgba(148, 163, 184, 0.08);
+  --glass-cyan-bg: rgba(8, 145, 178, 0.08);
+  --glass-cyan-border: rgba(6, 182, 212, 0.2);
+
+  --dot-grid-opacity: 0.06;
+
+  --input-bg: #0f172a; /* slate-900 */
+  --input-border: #1e293b; /* slate-800 */
+  --input-focus-bg: #020617; /* slate-950 */
 }
 
 @theme {
@@ -298,14 +306,14 @@ body::after {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: var(--bg-app);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: var(--border-solid);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: var(--border-light);
 }
 
 /* ─────────────────────────────────────────────────────────

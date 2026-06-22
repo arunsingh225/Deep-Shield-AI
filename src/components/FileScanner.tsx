@@ -216,7 +216,7 @@ export function FileScanner({
             </button>
           </div>
           {error && (
-            <p className="text-red-400 text-sm" role="alert">{error}</p>
+            <p className="text-red-600 dark:text-red-400 text-sm" role="alert">{error}</p>
           )}
         </div>
 
@@ -231,10 +231,10 @@ export function FileScanner({
               <ShieldCheck className="w-16 h-16 mb-4 text-cyan-500 opacity-80" />
               <p className="text-lg text-slate-100 font-medium mb-4">{t.verificationReady}</p>
               <ul className="text-sm space-y-2 text-left w-full max-w-[200px]">
-                <li className="flex items-center"><CheckCircle className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> Aadhaar Cards</li>
-                <li className="flex items-center"><CheckCircle className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> PAN Cards</li>
-                <li className="flex items-center"><CheckCircle className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> Passports</li>
-                <li className="flex items-center"><CheckCircle className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" /> Certificates</li>
+                <li className="flex items-center"><CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mr-2 flex-shrink-0" /> Aadhaar Cards</li>
+                <li className="flex items-center"><CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mr-2 flex-shrink-0" /> PAN Cards</li>
+                <li className="flex items-center"><CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mr-2 flex-shrink-0" /> Passports</li>
+                <li className="flex items-center"><CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mr-2 flex-shrink-0" /> Certificates</li>
               </ul>
             </div>
           ) : (

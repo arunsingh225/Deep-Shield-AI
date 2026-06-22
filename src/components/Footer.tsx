@@ -73,7 +73,7 @@ export function Footer() {
                   href="https://github.com/jaisogani-ai/DeepShield-AI"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-slate-500 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-100 transition-colors"
                 >
                   <Github className="w-4 h-4" />
                   <span className="text-xs font-mono">View on GitHub</span>
