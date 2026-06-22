@@ -40,6 +40,9 @@ export const RATE_LIMIT_MAX = Number(process.env.RATE_LIMIT_MAX) || 50;
 // ---------------------------------------------------------------------------
 
 export const app = express();
+// Trust the first proxy (Render / any reverse-proxy).
+// Required so express-rate-limit can read X-Forwarded-For correctly.
+app.set('trust proxy', 1);
 
 // Security headers (CSP, X-Frame-Options, etc.)
 app.use(helmet());
