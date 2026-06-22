@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Activity, RefreshCw, Video, FileText, MessageSquare, Link2, Mic, ShieldAlert, ShieldCheck } from 'lucide-react';
 import { isDangerVerdict } from '../types';
@@ -13,22 +13,34 @@ const TYPE_ICON: Record<string, React.ReactNode> = {
   'URL': <Link2 className="w-5 h-5" />,
 };
 
+const THREAT_BORDER: Record<string, string> = {
+  true: 'border-l-red-500',
+  false: 'border-l-emerald-500',
+};
+
 export function LiveScanFeed({ history }: { history: ScanResult[] }) {
   const recentScans = useMemo(() => [...history].reverse().slice(0, 10), [history]);
 
+  // Auto-refresh relative times every 30s
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => setTick((t) => t + 1), 30000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
-      <div className="p-5 sm:p-6 border-b border-slate-800 flex items-center justify-between bg-slate-900/50">
-        <h3 className="font-bold text-lg text-white flex items-center gap-2">
+    <div className="glass rounded-2xl overflow-hidden flex flex-col h-full">
+      <div className="p-5 sm:p-6 border-b border-slate-800/50 flex items-center justify-between">
+        <h3 className="font-bold text-lg text-slate-100 flex items-center gap-2">
           <Activity className="w-5 h-5 text-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]" /> Live Scan Feed
         </h3>
-        <span className="flex items-center gap-2 text-[10px] sm:text-xs font-mono text-cyan-400 bg-cyan-950/30 px-2 py-1 flex-shrink-0 rounded-md border border-cyan-900/50">
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse drop-shadow-[0_0_5px_#22d3ee]"></span>
+        <span className="flex items-center gap-2 text-[10px] sm:text-xs font-mono text-cyan-400 glass-cyan px-2 py-1 flex-shrink-0 rounded-full">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse drop-shadow-[0_0_5px_#22d3ee]" />
           LIVE
         </span>
       </div>
-      <div className="p-4 flex-1 h-[350px] overflow-y-auto custom-scrollbar bg-slate-950/50">
-        <div className="space-y-3 h-full">
+      <div className="p-4 flex-1 h-[350px] overflow-y-auto custom-scrollbar">
+        <div className="space-y-2.5 h-full">
           <AnimatePresence mode="popLayout">
             {recentScans.length === 0 ? (
               <motion.div
@@ -48,19 +60,18 @@ export function LiveScanFeed({ history }: { history: ScanResult[] }) {
                     layout
                     initial={{ opacity: 0, y: -20, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    className={`flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-xl border backdrop-blur-sm transition-colors gap-3 sm:gap-0
-                      ${isThreat
-                        ? 'bg-red-950/10 border-red-900/30 text-red-100'
-                        : 'bg-emerald-950/10 border-emerald-900/30 text-emerald-100'
-                      }`}
+                    className={`flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-xl border-l-4 glass-light transition-colors gap-3 sm:gap-0
+                      ${THREAT_BORDER[String(isThreat)]}
+                      ${isThreat ? 'text-red-100' : 'text-emerald-100'}
+                    `}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`shrink-0 p-2.5 rounded-lg ${isThreat ? 'bg-red-900/40 text-red-400' : 'bg-emerald-900/40 text-emerald-400'}`}>
+                      <div className={`shrink-0 p-2.5 rounded-lg ${isThreat ? 'bg-red-900/30 text-red-400' : 'bg-emerald-900/30 text-emerald-400'}`}>
                         {TYPE_ICON[item.type] || <Link2 className="w-5 h-5" />}
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center flex-wrap gap-2 mb-1">
-                          <span className={`text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded shadow-sm uppercase tracking-wider ${isThreat ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'}`}>
+                          <span className={`text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm uppercase tracking-wider ${isThreat ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'}`}>
                             {item.verdict}
                           </span>
                           <span className={`text-[10px] sm:text-xs font-mono font-medium ${isThreat ? 'text-red-300' : 'text-emerald-300'}`}>Conf: {item.confidence}%</span>

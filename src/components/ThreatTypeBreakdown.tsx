@@ -1,15 +1,15 @@
 import { useMemo } from 'react';
 import { motion } from 'motion/react';
-import { Activity } from 'lucide-react';
+import { Activity, Video, Mic, FileText, MessageSquare, Link2 } from 'lucide-react';
 import { isDangerVerdict } from '../types';
 import type { ScanResult } from '../types';
 
 const CATEGORIES = [
-  { type: 'Media File', label: 'Deepfakes', color: 'bg-indigo-500' },
-  { type: 'Voice Clone', label: 'Voice Clones', color: 'bg-fuchsia-500' },
-  { type: 'Document', label: 'Fake Documents', color: 'bg-emerald-500' },
-  { type: 'Text/Message', label: 'Scam Messages', color: 'bg-orange-500' },
-  { type: 'URL', label: 'Dangerous URLs', color: 'bg-rose-500' },
+  { type: 'Media File', label: 'Deepfakes', icon: Video, gradient: 'from-indigo-500 to-indigo-600' },
+  { type: 'Voice Clone', label: 'Voice Clones', icon: Mic, gradient: 'from-fuchsia-500 to-fuchsia-600' },
+  { type: 'Document', label: 'Fake Documents', icon: FileText, gradient: 'from-emerald-500 to-emerald-600' },
+  { type: 'Text/Message', label: 'Scam Messages', icon: MessageSquare, gradient: 'from-orange-500 to-orange-600' },
+  { type: 'URL', label: 'Dangerous URLs', icon: Link2, gradient: 'from-rose-500 to-rose-600' },
 ];
 
 export function ThreatTypeBreakdown({ history }: { history: ScanResult[] }) {
@@ -32,29 +32,37 @@ export function ThreatTypeBreakdown({ history }: { history: ScanResult[] }) {
   }, [history, maxTotal]);
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
-      <div className="p-6 border-b border-slate-800 bg-slate-900/50">
-        <h3 className="font-bold text-lg text-white flex items-center gap-2">
+    <div className="glass rounded-2xl overflow-hidden flex flex-col h-full">
+      <div className="p-6 border-b border-slate-800/50">
+        <h3 className="font-bold text-lg text-slate-100 flex items-center gap-2">
           <Activity className="w-5 h-5 text-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]" /> Threat Breakdown
         </h3>
       </div>
-      <div className="p-6 space-y-6 flex-1 bg-slate-950/30">
+      <div className="p-6 space-y-5 flex-1">
         {breakdownData.map((item) => {
+          const Icon = item.icon;
           return (
-            <div key={item.label}>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-slate-300 font-medium">{item.label}</span>
-                <span className="text-slate-500">
+            <div key={item.label} className="group">
+              <div className="flex items-center justify-between text-sm mb-2">
+                <span className="text-slate-300 font-medium flex items-center gap-2">
+                  <Icon className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
+                  {item.label}
+                </span>
+                <span className="text-slate-500 text-xs font-mono">
                   <span className="text-slate-200 font-bold">{item.threatCount} threats</span> / {item.count} total
                 </span>
               </div>
-              <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-slate-800/50 rounded-full h-3 overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${item.pct}%` }}
                   transition={{ duration: 1.5, ease: 'easeOut' }}
-                  className={`h-full ${item.color} shadow-[0_0_10px_currentColor]`}
-                />
+                  className={`h-full bg-gradient-to-r ${item.gradient} rounded-full relative`}
+                  style={{ boxShadow: '0 0 10px currentColor' }}
+                >
+                  {/* Animated stripe pattern */}
+                  <div className="absolute inset-0 gradient-bar-stripe rounded-full" />
+                </motion.div>
               </div>
             </div>
           );

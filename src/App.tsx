@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { LangContext } from './contexts/LangContext';
 import { SoundContext } from './contexts/SoundContext';
 import { translations } from './i18n/translations';
@@ -11,6 +11,9 @@ import type { LangType, ScanResult } from './types';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { FeedbackWidget } from './components/FeedbackWidget';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { Shield } from 'lucide-react';
 
 // Lazy-loaded page components — each gets its own bundle chunk
 const Hero = lazy(() => import('./components/Hero').then((m) => ({ default: m.Hero })));
@@ -23,11 +26,26 @@ const Dashboard = lazy(() => import('./components/Dashboard').then((m) => ({ def
 
 const LOCAL_HISTORY_KEY = 'deepshield_history';
 
-/** Loading spinner shown while lazy chunks are fetched. */
+/** Branded loading screen shown while lazy chunks are fetched. */
 function PageLoader() {
   return (
-    <div className="flex-1 flex items-center justify-center" role="status" aria-label="Loading page">
-      <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+    <div className="flex-1 flex flex-col items-center justify-center gap-6" role="status" aria-label="Loading page">
+      <div className="relative">
+        <motion.div
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <Shield className="w-14 h-14 text-cyan-500 drop-shadow-[0_0_20px_rgba(6,182,212,0.5)]" />
+        </motion.div>
+        {/* Pulsing ring */}
+        <motion.div
+          animate={{ scale: [1, 1.6], opacity: [0.4, 0] }}
+          transition={{ duration: 1.2, repeat: Infinity }}
+          className="absolute inset-[-6px] border-2 border-cyan-500/30 rounded-full"
+        />
+      </div>
+      {/* Shimmer skeleton bar */}
+      <div className="w-48 h-2 rounded-full shimmer" />
       <span className="sr-only">Loading…</span>
     </div>
   );
@@ -152,6 +170,7 @@ function AppShell() {
           </main>
 
           <Footer />
+          <FeedbackWidget />
         </div>
       </SoundContext.Provider>
     </LangContext.Provider>
@@ -161,9 +180,11 @@ function AppShell() {
 export default function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
-        <AppShell />
-      </BrowserRouter>
+      <ThemeProvider>
+        <BrowserRouter>
+          <AppShell />
+        </BrowserRouter>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }

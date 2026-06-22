@@ -1,11 +1,26 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { MessageSquare, X, RefreshCw, Search, Shield } from 'lucide-react';
+import { MessageSquare, X, RefreshCw, Search, Shield, Zap } from 'lucide-react';
 import { useLang } from '../contexts/LangContext';
 import { analyzeScam } from '../lib/api';
 import { ScanningAnimation } from './ScanningAnimation';
 import { AnalysisResultCard } from './AnalysisResultCard';
 import type { ScanResult } from '../types';
+
+const SAMPLE_MESSAGES = [
+  {
+    label: '🏦 Fake KYC',
+    text: 'Dear customer, your SBI account PAN link is pending. Your account will be blocked today. Click link to update immediately: http://sbi-kyc-update.xyz',
+  },
+  {
+    label: '🎁 Lottery Scam',
+    text: 'Congratulations! You won ₹25,00,000 in Jio Lucky Draw 2026! Claim now by sending your Aadhaar and bank details to this WhatsApp: +91 98765 43210',
+  },
+  {
+    label: '⚡ Bill Scam',
+    text: 'URGENT: Your electricity connection will be disconnected today due to pending bill of ₹4,832. Pay now via this link to avoid disconnection: http://bill-pay-india.net/urgent',
+  },
+];
 
 export function ScamChecker({ onScanComplete }: { onScanComplete: (r: ScanResult) => void }) {
   const { t } = useLang();
@@ -40,7 +55,7 @@ export function ScamChecker({ onScanComplete }: { onScanComplete: (r: ScanResult
       className="w-full max-w-4xl mx-auto"
     >
       <div className="mb-8 text-left sm:text-center">
-        <h2 className="text-3xl font-bold text-white tracking-tight mb-2 flex items-center justify-center gap-3">
+        <h2 className="text-3xl font-bold text-slate-100 tracking-tight mb-2 flex items-center justify-center gap-3">
           <MessageSquare className="w-8 h-8 text-cyan-400" />
           {t.scamTitle}
         </h2>
@@ -55,7 +70,7 @@ export function ScamChecker({ onScanComplete }: { onScanComplete: (r: ScanResult
             </label>
             <textarea
               id="scam-text-input"
-              className="w-full h-[300px] bg-slate-900 border border-slate-700 rounded-2xl p-4 text-slate-200 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all resize-none"
+              className="w-full h-[260px] glass rounded-2xl p-4 text-slate-200 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all resize-none placeholder:text-slate-600"
               placeholder="Paste the suspicious message here...&#10;&#10;e.g., 'Dear customer, your SBI account PAN link is pending. Your account will be blocked today. Click link: http://sbi-kyc-update.xyz'"
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -64,21 +79,43 @@ export function ScamChecker({ onScanComplete }: { onScanComplete: (r: ScanResult
             {text && (
               <button
                 onClick={() => setText('')}
-                className="absolute top-4 right-4 text-slate-500 hover:text-slate-300"
+                className="absolute top-4 right-4 text-slate-500 hover:text-slate-300 transition-colors"
                 aria-label="Clear text"
               >
                 <X className="w-5 h-5" />
               </button>
             )}
+
+            {/* Character count */}
+            <div className="absolute bottom-3 right-4 text-xs font-mono text-slate-600">
+              {text.length} chars
+            </div>
           </div>
+
+          {/* Quick-paste sample buttons */}
+          <div className="flex flex-wrap gap-2">
+            <span className="text-xs text-slate-500 flex items-center gap-1 mr-1">
+              <Zap className="w-3 h-3" /> Try sample:
+            </span>
+            {SAMPLE_MESSAGES.map((sample) => (
+              <button
+                key={sample.label}
+                onClick={() => setText(sample.text)}
+                className="text-xs px-3 py-1.5 rounded-lg glass-light text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all"
+              >
+                {sample.label}
+              </button>
+            ))}
+          </div>
+
           <div className="flex justify-end">
             <button
               onClick={handleAnalyze}
               disabled={!text.trim() || isScanning}
-              className={`px-6 py-3 rounded-lg font-bold flex items-center gap-2 transition-all
+              className={`px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all
                 ${!text.trim() || isScanning
                   ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                  : 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
+                  : 'btn-gradient text-white'
                 }`}
             >
               {isScanning ? (
@@ -99,7 +136,7 @@ export function ScamChecker({ onScanComplete }: { onScanComplete: (r: ScanResult
           ) : result ? (
             <AnalysisResultCard result={result} />
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center bg-slate-900/40 rounded-2xl border border-slate-800/50 p-8 text-center text-slate-500">
+            <div className="flex-1 flex flex-col items-center justify-center glass rounded-2xl p-8 text-center text-slate-500">
               <Shield className="w-16 h-16 mb-4 opacity-50" />
               <p>{t.resultsWillAppear}</p>
             </div>

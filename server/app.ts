@@ -1,5 +1,8 @@
 // DeepShield AI — Express Application Setup
-import 'dotenv/config';
+// dotenv: load .env in local dev; on Vercel env vars are injected natively.
+// dotenv.config() is a no-op when .env is absent — safe for all environments.
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -16,7 +19,6 @@ import {
   GeminiResponseSchema,
   type ValidatedGeminiResponse,
 } from './validators';
-import type { EvidenceItem } from '../src/types';
 
 // ---------------------------------------------------------------------------
 // Configuration
@@ -30,7 +32,7 @@ const ai = new GoogleGenAI({ apiKey: apiKey || '' });
 
 export const MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
 export const PORT = Number(process.env.PORT) || 8787;
-export const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || 'http://localhost:3000';
+export const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*';
 export const RATE_LIMIT_MAX = Number(process.env.RATE_LIMIT_MAX) || 50;
 
 // ---------------------------------------------------------------------------
@@ -108,7 +110,7 @@ export function finalize(raw: ValidatedGeminiResponse, type: string) {
     confidence_band,
     threat_level: raw.threat_level,
     evidence,
-    red_flags: evidence.map((e: EvidenceItem) => e.finding),
+    red_flags: evidence.map((e: { finding: string }) => e.finding),
     explanation_hindi: raw.explanation_hindi,
     explanation_english: raw.explanation_english,
     recommendation: raw.recommendation,

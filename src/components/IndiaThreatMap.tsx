@@ -118,7 +118,7 @@ export function IndiaThreatMap() {
         </div>
         <div className="flex items-center gap-2 bg-yellow-950/40 px-3 py-1.5 rounded-lg border border-yellow-900/60 shadow-[0_0_10px_rgba(234,179,8,0.2)]">
           <Activity className="w-4 h-4 text-yellow-500 animate-pulse" />
-          <span className="text-yellow-400 font-mono text-sm tracking-wider font-bold">SIMULATED THREATS: <span className="text-white">{activeThreats}</span></span>
+          <span className="text-yellow-400 font-mono text-sm tracking-wider font-bold">SIMULATED THREATS: <span className="text-slate-100">{activeThreats}</span></span>
         </div>
       </div>
 
@@ -212,10 +212,10 @@ export function IndiaThreatMap() {
                 pointerEvents: 'none',
                 zIndex: 100,
               }}
-              className="bg-[#0f172a] border border-cyan-500 p-4 rounded-xl shadow-[0_10px_30px_rgba(0,212,255,0.2)] min-w-[220px]"
+              className="theme-card theme-border border border-cyan-500/50 p-4 rounded-xl shadow-[0_10px_30px_rgba(0,212,255,0.2)] min-w-[220px]"
             >
               <div className="flex items-center justify-between mb-2">
-                <h4 className="text-white font-bold text-lg">{tooltip.name}</h4>
+                <h4 className="text-slate-100 font-bold text-lg">{tooltip.name}</h4>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${getBorderClass(tooltip.level)} bg-slate-900`}>
                   {tooltip.level}
                 </span>

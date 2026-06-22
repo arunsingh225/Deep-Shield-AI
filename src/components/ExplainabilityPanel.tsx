@@ -1,3 +1,4 @@
+import { motion } from 'motion/react';
 import { Image as ImageIcon, Mic, MessageSquare, FileText, Link2, AlertTriangle } from 'lucide-react';
 import { useLang } from '../contexts/LangContext';
 import type { EvidenceItem } from '../types';
@@ -10,10 +11,10 @@ const CATEGORY_ICON: Record<string, React.ReactNode> = {
   network: <Link2 className="w-4 h-4" />,
 };
 
-const SEVERITY_STYLE: Record<string, string> = {
-  high: 'border-red-700/50 bg-red-950/30 text-red-200',
-  medium: 'border-yellow-700/50 bg-yellow-950/30 text-yellow-200',
-  low: 'border-slate-700/50 bg-slate-900/40 text-slate-300',
+const SEVERITY_STYLE: Record<string, { bg: string; dot: string }> = {
+  high: { bg: 'border-red-700/40 bg-red-950/20 text-red-200', dot: 'bg-red-500' },
+  medium: { bg: 'border-yellow-700/40 bg-yellow-950/20 text-yellow-200', dot: 'bg-yellow-500' },
+  low: { bg: 'border-slate-700/40 bg-slate-900/30 text-slate-300', dot: 'bg-slate-500' },
 };
 
 const SEVERITY_ORDER: Record<string, number> = { high: 0, medium: 1, low: 2 };
@@ -39,23 +40,35 @@ export function ExplainabilityPanel({ evidence, fallbackFlags }: { evidence?: Ev
 
   return (
     <ul className="space-y-2">
-      {sorted.map((item, i) => (
-        <li
-          key={i}
-          className={`flex items-start gap-3 p-3 rounded-lg border ${SEVERITY_STYLE[item.severity] || SEVERITY_STYLE.low}`}
-        >
-          <span className="mt-0.5 opacity-80 flex-shrink-0">
-            {CATEGORY_ICON[item.category] || <AlertTriangle className="w-4 h-4" />}
-          </span>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium break-words">{item.finding}</p>
-            {item.location && <p className="text-xs opacity-70 mt-0.5">📍 {item.location}</p>}
-          </div>
-          <span className="text-[10px] uppercase tracking-wider font-bold opacity-70 mt-0.5 flex-shrink-0">
-            {item.severity}
-          </span>
-        </li>
-      ))}
+      {sorted.map((item, i) => {
+        const style = SEVERITY_STYLE[item.severity] || SEVERITY_STYLE.low;
+        return (
+          <motion.li
+            key={i}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.08, duration: 0.3 }}
+            className={`flex items-start gap-3 p-3 rounded-xl border backdrop-blur-sm ${style.bg} transition-all hover:scale-[1.01]`}
+          >
+            {/* Category icon with color dot */}
+            <div className="flex items-center gap-1.5 mt-0.5 flex-shrink-0">
+              <span className={`w-2 h-2 rounded-full ${style.dot} shadow-[0_0_4px_currentColor]`} />
+              <span className="opacity-80">
+                {CATEGORY_ICON[item.category] || <AlertTriangle className="w-4 h-4" />}
+              </span>
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium break-words">{item.finding}</p>
+              {item.location && <p className="text-xs opacity-70 mt-0.5">📍 {item.location}</p>}
+            </div>
+
+            <span className={`text-[10px] uppercase tracking-wider font-bold mt-0.5 flex-shrink-0 px-2 py-0.5 rounded-full ${style.bg}`}>
+              {item.severity}
+            </span>
+          </motion.li>
+        );
+      })}
     </ul>
   );
 }
